@@ -1,0 +1,2 @@
+# komik_app
+ 
