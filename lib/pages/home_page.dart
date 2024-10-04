@@ -133,7 +133,9 @@ class _HomePageState extends State<HomePage> {
                 childAspectRatio: 0.5,
               ),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: 20)),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 20),
+            ),
           ],
         ),
       ),
