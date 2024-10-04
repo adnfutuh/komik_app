@@ -80,7 +80,7 @@ class Dummy {
     BookModel(
       bookId: '06',
       imageUrl: 'assets/komik6.jpg',
-      title: 'The World After The Falle',
+      title: 'The World After The Fall',
       rank: ' 24th, it has 10M views',
       alternative:
           '멸망 이후의 세계 | The World After the End | The World After Destruction',
@@ -202,7 +202,7 @@ class Dummy {
     ),
     BookModel(
       bookId: '14',
-      imageUrl: 'assets/komik14.jpg',
+      imageUrl: 'assets/komik14.png',
       title: 'The Regressed Mercenary’s Machinations',
       rank: 'N/A, it has 508.2K views',
       alternative: '회귀한 용병은 다 계획이 있다',
