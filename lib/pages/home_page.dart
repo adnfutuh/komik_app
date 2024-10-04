@@ -54,7 +54,10 @@ class HomePage extends StatelessWidget {
             SliverToBoxAdapter(
               child: Container(
                 padding: const EdgeInsets.only(left: 15),
-                height: util.isTablet ? 280 : 315,
+                height: util.isTablet
+                    ? 280
+                    // : util.isPenyesuaian
+                    : 315,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: books.length > 7 ? 7 : books.length,
@@ -64,7 +67,11 @@ class HomePage extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: Container(
-                          width: util.isPhone ? 200 : 180,
+                          width: util.isPhone
+                              ? 200
+                              // : util.isPenyesuaian
+                              //     ? 140
+                              : 180,
                           decoration: BoxDecoration(
                             color: Colors.grey[850],
                             boxShadow: [
@@ -111,8 +118,10 @@ class HomePage extends StatelessWidget {
                 crossAxisCount: util.isPhone
                     ? 2
                     : util.isTablet
-                        ? 4
-                        : 6,
+                        ? 3
+                        : util.isPc
+                            ? 6
+                            : 4,
                 mainAxisSpacing: 5,
                 crossAxisSpacing: 5,
                 childAspectRatio: 0.5,
