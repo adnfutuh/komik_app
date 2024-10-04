@@ -6,9 +6,17 @@ import 'package:komik_app/widget/book_card.dart';
 
 import '../util/util.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  final Function(String) onFavoriteToggle;
+  final List<String> favBooks;
+  const HomePage(
+      {super.key, required this.onFavoriteToggle, required this.favBooks});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     List<BookModel> books = Dummy.books;
@@ -50,14 +58,10 @@ class HomePage extends StatelessWidget {
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 30)),
 
-            // Horizontal ListView for "Sedang Hangat"
             SliverToBoxAdapter(
               child: Container(
                 padding: const EdgeInsets.only(left: 15),
-                height: util.isTablet
-                    ? 280
-                    // : util.isPenyesuaian
-                    : 315,
+                height: util.isTablet ? 280 : 315,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: books.length > 7 ? 7 : books.length,
@@ -67,11 +71,7 @@ class HomePage extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: Container(
-                          width: util.isPhone
-                              ? 200
-                              // : util.isPenyesuaian
-                              //     ? 140
-                              : 180,
+                          width: util.isPhone ? 200 : 180,
                           decoration: BoxDecoration(
                             color: Colors.grey[850],
                             boxShadow: [
@@ -82,7 +82,11 @@ class HomePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: BookCard(book: books[index]),
+                          child: BookCard(
+                            book: books[index],
+                            onFavoriteToggle: widget.onFavoriteToggle,
+                            favBooks: widget.favBooks,
+                          ),
                         ),
                       ),
                     );
@@ -92,7 +96,6 @@ class HomePage extends StatelessWidget {
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 20)),
 
-            // GridView for "Komik Baru"
             SliverToBoxAdapter(
               child: Center(
                 child: Container(
@@ -107,13 +110,15 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            const SliverToBoxAdapter(
-              child: SizedBox(height: 20),
-            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 20)),
             SliverGrid(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return BookCard(book: books[index]);
+                  return BookCard(
+                    book: books[index],
+                    onFavoriteToggle: widget.onFavoriteToggle,
+                    favBooks: widget.favBooks,
+                  );
                 },
                 childCount: books.length,
               ),

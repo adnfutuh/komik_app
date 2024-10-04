@@ -4,6 +4,9 @@ import 'package:komik_app/pages/home_page.dart';
 import 'package:komik_app/pages/mirror_page.dart';
 import 'package:komik_app/pages/project_page.dart';
 
+import '../data_provider/dummy.dart';
+import '../models/book_model.dart';
+
 class BottomNavbar extends StatefulWidget {
   const BottomNavbar({super.key});
 
@@ -12,20 +15,40 @@ class BottomNavbar extends StatefulWidget {
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
-  int _selectedIndex = 0; // Menyimpan indeks halaman yang dipilih
+  List<BookModel> books = Dummy.books;
+  List<String> favBooks = [];
+  int _selectedIndex = 0;
 
-  // Daftar halaman yang akan ditampilkan
-  final List<Widget> _screens = [
-    const HomePage(),
-    const ProjectPage(),
-    const MirrorPage(),
-    const FavoritePage(),
-  ];
+  void toggleFav(String bookId) {
+    setState(() {
+      if (favBooks.contains(bookId)) {
+        favBooks.remove(bookId);
+      } else {
+        favBooks.add(bookId);
+      }
+      // Debug log
+      print('Fav Books: $favBooks');
+    });
+  }
+
+  final List<Widget> _screens = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Menginisialisasi halaman dengan akses ke daftar favorit dan fungsi toggle
+    _screens.addAll([
+      HomePage(onFavoriteToggle: toggleFav, favBooks: favBooks),
+      ProjectPage(onFavoriteToggle: toggleFav, favBooks: favBooks),
+      MirrorPage(onFavoriteToggle: toggleFav, favBooks: favBooks),
+      FavoritePage(onFavoriteToggle: toggleFav, favBooks: favBooks),
+    ]);
+  }
 
   // Fungsi untuk menangani perubahan halaman
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index; // Mengubah indeks halaman yang dipilih
+      _selectedIndex = index;
     });
   }
 

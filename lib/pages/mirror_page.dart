@@ -6,15 +6,25 @@ import '../models/book_model.dart';
 import '../util/util.dart';
 import '../widget/book_card.dart';
 
-class MirrorPage extends StatelessWidget {
-  const MirrorPage({super.key});
+class MirrorPage extends StatefulWidget {
+  final Function(String) onFavoriteToggle;
+  final List<String> favBooks;
 
+  const MirrorPage(
+      {super.key, required this.onFavoriteToggle, required this.favBooks});
+
+  @override
+  State<MirrorPage> createState() => _MirrorPageState();
+}
+
+class _MirrorPageState extends State<MirrorPage> {
   @override
   Widget build(BuildContext context) {
     List<BookModel> books = Dummy.books;
     Util util = Util(context);
+
     return Scaffold(
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Column(
           children: [
@@ -43,7 +53,7 @@ class MirrorPage extends StatelessWidget {
                       Container(
                         decoration: const BoxDecoration(
                           shape: BoxShape.rectangle,
-                          color: Colors.black,
+                          color: Colors.black87,
                         ),
                         child: const Icon(
                           Icons.chrome_reader_mode,
@@ -65,7 +75,6 @@ class MirrorPage extends StatelessWidget {
               ),
             ),
             Expanded(
-              // Menggunakan Expanded di sini
               child: SizedBox(
                 width: util.width * 0.8,
                 child: GridView.builder(
@@ -82,7 +91,9 @@ class MirrorPage extends StatelessWidget {
                   itemCount: 1,
                   itemBuilder: (context, index) {
                     return BookCard(
-                      book: books.last, // Mengambil buku terakhir
+                      book: books.last,
+                      onFavoriteToggle: widget.onFavoriteToggle,
+                      favBooks: widget.favBooks,
                     );
                   },
                 ),
