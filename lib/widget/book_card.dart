@@ -73,27 +73,29 @@ class BookCard extends StatelessWidget {
         color: Colors.black,
         child: Column(
           children: [
-            Container(
-              height: height,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  image: AssetImage(book.imageUrl),
-                  fit: BoxFit.cover,
-                ),
-              ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
               child: Container(
-                padding: const EdgeInsets.all(3),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                    padding: const EdgeInsets.all(1),
-                    decoration: BoxDecoration(
-                      color: getBackgroundColor(book.komik),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      book.komik.title.toUpperCase(),
+                height: height,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(book.imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(3),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      padding: const EdgeInsets.all(1),
+                      decoration: BoxDecoration(
+                        color: getBackgroundColor(book.komik),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        book.komik.title.toUpperCase(),
+                      ),
                     ),
                   ),
                 ),

@@ -98,7 +98,7 @@ class HomePage extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(15),
                   child: Text(
-                    'Komik Baru',
+                    'Komik Terbaru',
                     style: defaultTxt.copyWith(
                       color: Colors.white,
                       fontSize: 22,
@@ -106,6 +106,9 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 20),
             ),
             SliverGrid(
               delegate: SliverChildBuilderDelegate(
@@ -119,9 +122,7 @@ class HomePage extends StatelessWidget {
                     ? 2
                     : util.isTablet
                         ? 3
-                        : util.isPc
-                            ? 6
-                            : 4,
+                        : 6,
                 mainAxisSpacing: 5,
                 crossAxisSpacing: 5,
                 childAspectRatio: 0.5,
