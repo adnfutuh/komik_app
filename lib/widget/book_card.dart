@@ -1,9 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:komik_app/const/const.dart';
 import 'package:komik_app/models/book_model.dart';
 import 'package:komik_app/models/enum.dart';
+import 'package:komik_app/pages/detail_page.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/book_provider.dart';
@@ -22,44 +21,6 @@ class BookCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bookProvider = Provider.of<BookProvider>(context);
-    Util util = Util(context);
-
-    double height = 100;
-    if (util.isPhone) {
-      height += (util.width * 5 / 100);
-      if (util.width > 250) {
-        height += (util.width * 30 / 100);
-      }
-      if (util.width > 350) {
-        height += (util.width * 10 / 100);
-      }
-      height = clampDouble(height, 100, 250);
-    }
-    if (util.isTablet) {
-      height = 100;
-      height += (util.width * 20 / 100);
-      if (util.width > 550) {
-        height += (util.width * 5 / 100);
-      }
-      if (util.width > 650) {
-        height += (util.width * 5 / 100);
-      }
-      if (util.width > 750) {
-        height += (util.width * 5 / 100);
-      }
-      height = clampDouble(height, 130, 200);
-    }
-    if (util.isPc) {
-      height = 100;
-      height += (util.width * 5 / 100);
-      if (util.width > 850) {
-        height += (util.width * 5 / 100);
-      }
-      if (util.width > 1150) {
-        height += (util.width * 5 / 100);
-      }
-      height = clampDouble(height, 100, 250);
-    }
 
     Color getBackgroundColor(Komik komik) {
       switch (komik) {
@@ -74,103 +35,120 @@ class BookCard extends StatelessWidget {
       }
     }
 
-    return Card(
-      color: Colors.black,
-      clipBehavior: Clip.hardEdge,
-      child: Container(
-        color: Colors.black,
-        child: Column(children: [
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  height: height,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(book.imageUrl),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.all(3),
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: Container(
-                        padding: const EdgeInsets.all(1),
-                        decoration: BoxDecoration(
-                          color: getBackgroundColor(book.komik),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          book.komik.title.toUpperCase(),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 0,
-                left: 0,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.favorite,
-                    color: bookProvider.favBooks.contains(book.bookId)
-                        ? Colors.red
-                        : Colors.black.withOpacity(0.7),
-                  ),
-                  onPressed: () {
-                    onFavoriteToggle(book.bookId);
-                    final isFavorited =
-                        bookProvider.favBooks.contains(book.bookId);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          isFavorited
-                              ? 'Ditambahkan ke favorit'
-                              : 'Dihapus dari favorit',
-                        ),
-                        duration: const Duration(seconds: 1),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => DetailPage(
+              book: book,
+              favBooks: bookProvider.favBooks,
+              toggleFav: bookProvider.toggleFavorite,
+            ),
           ),
-          Expanded(
-            child: Container(
-              height: 70 + Util(context).width / 400 * 10,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      end: AlignmentDirectional.topCenter,
-                      begin: AlignmentDirectional.bottomCenter,
-                      colors: [
-                        Colors.black.withOpacity(0.3),
-                        Colors.black.withOpacity(0.9)
-                      ]),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 10,
-                    )
-                  ]),
-              padding: const EdgeInsets.all(8),
-              alignment: Alignment.center,
-              child: Text(
-                book.title,
-                textAlign: TextAlign.center,
-                style: defaultTxt.copyWith(
-                  fontSize: 12,
-                  color: Colors.white,
-                  letterSpacing: 1.5,
-                  fontWeight: FontWeight.w600,
+        );
+      },
+      child: Card(
+        color: Colors.black,
+        clipBehavior: Clip.hardEdge,
+        child: Container(
+          color: Colors.black,
+          child: Column(children: [
+            Stack(
+              children: [
+                Hero(
+                  tag: book.bookId,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(book.imageUrl),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                        top: 5,
+                        right: 4,
+                      ),
+                      padding: const EdgeInsets.all(3),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          padding: const EdgeInsets.all(1),
+                          decoration: BoxDecoration(
+                            color: getBackgroundColor(book.komik),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            book.komik.title.toUpperCase(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.favorite,
+                      color: bookProvider.favBooks.contains(book.bookId)
+                          ? Colors.red
+                          : Colors.black.withOpacity(0.7),
+                    ),
+                    onPressed: () {
+                      onFavoriteToggle(book.bookId);
+                      final isFavorited =
+                          bookProvider.favBooks.contains(book.bookId);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            isFavorited
+                                ? 'Ditambahkan ke favorit'
+                                : 'Dihapus dari favorit',
+                          ),
+                          duration: const Duration(seconds: 1),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: Container(
+                height: 70 + Util(context).width / 300 * 10,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        end: AlignmentDirectional.topCenter,
+                        begin: AlignmentDirectional.bottomCenter,
+                        colors: [
+                          Colors.black.withOpacity(0.3),
+                          Colors.black.withOpacity(0.9)
+                        ]),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                      )
+                    ]),
+                padding: const EdgeInsets.all(8),
+                alignment: Alignment.center,
+                child: Text(
+                  book.title,
+                  textAlign: TextAlign.center,
+                  style: defaultTxt.copyWith(
+                    fontSize: 12,
+                    color: Colors.white,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }

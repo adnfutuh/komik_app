@@ -24,8 +24,11 @@ class FavoritePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text('Favorites', style: defaultTxt.copyWith(color: Colors.white)),
+        title: Text(
+          'Favorites',
+          style: defaultTxt.copyWith(color: Colors.white),
+        ),
+        backgroundColor: Colors.black,
       ),
       body: favoriteBooks.isEmpty
           ? Center(

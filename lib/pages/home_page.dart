@@ -125,7 +125,7 @@ class HomePage extends StatelessWidget {
                         : 6,
                 mainAxisSpacing: 5,
                 crossAxisSpacing: 5,
-                childAspectRatio: 0.5,
+                mainAxisExtent: 300,
               ),
             ),
             const SliverToBoxAdapter(
