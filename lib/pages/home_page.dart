@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:komik_app/const/const.dart';
-import 'package:komik_app/data_provider/dummy.dart';
 import 'package:komik_app/models/book_model.dart';
 import 'package:komik_app/widget/book_card.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/book_provider.dart';
 import '../util/util.dart';
 
-class HomePage extends StatefulWidget {
-  final Function(String) onFavoriteToggle;
-  final List<String> favBooks;
-  const HomePage(
-      {super.key, required this.onFavoriteToggle, required this.favBooks});
+class HomePage extends StatelessWidget {
+  const HomePage({
+    super.key,
+    required void Function(String bookId) onFavoriteToggle,
+    required List<String> favBooks,
+  });
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    List<BookModel> books = Dummy.books;
+    final bookProvider = Provider.of<BookProvider>(context);
+    List<BookModel> books = bookProvider.books;
     Util util = Util(context);
 
     return Scaffold(
-      backgroundColor: Colors.black,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -84,8 +81,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           child: BookCard(
                             book: books[index],
-                            onFavoriteToggle: widget.onFavoriteToggle,
-                            favBooks: widget.favBooks,
+                            onFavoriteToggle: bookProvider.toggleFavorite,
                           ),
                         ),
                       ),
@@ -116,8 +112,7 @@ class _HomePageState extends State<HomePage> {
                 (BuildContext context, int index) {
                   return BookCard(
                     book: books[index],
-                    onFavoriteToggle: widget.onFavoriteToggle,
-                    favBooks: widget.favBooks,
+                    onFavoriteToggle: bookProvider.toggleFavorite,
                   );
                 },
                 childCount: books.length,

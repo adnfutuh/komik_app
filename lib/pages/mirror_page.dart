@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../const/const.dart';
-import '../data_provider/dummy.dart';
 import '../models/book_model.dart';
+import '../providers/book_provider.dart';
 import '../util/util.dart';
 import '../widget/book_card.dart';
 
-class MirrorPage extends StatefulWidget {
-  final Function(String) onFavoriteToggle;
-  final List<String> favBooks;
+class MirrorPage extends StatelessWidget {
+  const MirrorPage({
+    super.key,
+    required void Function(String bookId) onFavoriteToggle,
+    required List<String> favBooks,
+  });
 
-  const MirrorPage(
-      {super.key, required this.onFavoriteToggle, required this.favBooks});
-
-  @override
-  State<MirrorPage> createState() => _MirrorPageState();
-}
-
-class _MirrorPageState extends State<MirrorPage> {
   @override
   Widget build(BuildContext context) {
-    List<BookModel> books = Dummy.books;
+    final bookProvider = Provider.of<BookProvider>(context);
+    List<BookModel> books = bookProvider.books;
     Util util = Util(context);
 
     return Scaffold(
-      backgroundColor: Colors.black,
       body: SafeArea(
         child: Column(
           children: [
@@ -92,8 +88,7 @@ class _MirrorPageState extends State<MirrorPage> {
                   itemBuilder: (context, index) {
                     return BookCard(
                       book: books.last,
-                      onFavoriteToggle: widget.onFavoriteToggle,
-                      favBooks: widget.favBooks,
+                      onFavoriteToggle: bookProvider.toggleFavorite,
                     );
                   },
                 ),

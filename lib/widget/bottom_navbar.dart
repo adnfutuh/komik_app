@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:komik_app/pages/favorite_page.dart';
-import 'package:komik_app/pages/home_page.dart';
-import 'package:komik_app/pages/mirror_page.dart';
-import 'package:komik_app/pages/project_page.dart';
-
-import '../data_provider/dummy.dart';
-import '../models/book_model.dart';
+import 'package:provider/provider.dart';
+import '../pages/favorite_page.dart';
+import '../pages/home_page.dart';
+import '../pages/mirror_page.dart';
+import '../pages/project_page.dart';
+import '../providers/book_provider.dart';
 
 class BottomNavbar extends StatefulWidget {
   const BottomNavbar({super.key});
@@ -15,37 +14,10 @@ class BottomNavbar extends StatefulWidget {
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
-  List<BookModel> books = Dummy.books;
-  List<String> favBooks = [];
   int _selectedIndex = 0;
-
-  void toggleFav(String bookId) {
-    setState(() {
-      if (favBooks.contains(bookId)) {
-        favBooks.remove(bookId);
-      } else {
-        favBooks.add(bookId);
-      }
-      // Debug log
-      print('Fav Books: $favBooks');
-    });
-  }
 
   final List<Widget> _screens = [];
 
-  @override
-  void initState() {
-    super.initState();
-    // Menginisialisasi halaman dengan akses ke daftar favorit dan fungsi toggle
-    _screens.addAll([
-      HomePage(onFavoriteToggle: toggleFav, favBooks: favBooks),
-      ProjectPage(onFavoriteToggle: toggleFav, favBooks: favBooks),
-      MirrorPage(onFavoriteToggle: toggleFav, favBooks: favBooks),
-      FavoritePage(onFavoriteToggle: toggleFav, favBooks: favBooks),
-    ]);
-  }
-
-  // Fungsi untuk menangani perubahan halaman
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -54,8 +26,31 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
   @override
   Widget build(BuildContext context) {
+    final bookProvider = Provider.of<BookProvider>(context);
+
+    // Mengisi _screens dengan data dari bookProvider
+    if (_screens.isEmpty) {
+      _screens.addAll([
+        HomePage(
+          onFavoriteToggle: bookProvider.toggleFavorite,
+          favBooks: bookProvider.favBooks,
+        ),
+        ProjectPage(
+          onFavoriteToggle: bookProvider.toggleFavorite,
+          favBooks: bookProvider.favBooks,
+        ),
+        MirrorPage(
+          onFavoriteToggle: bookProvider.toggleFavorite,
+          favBooks: bookProvider.favBooks,
+        ),
+        FavoritePage(
+          onFavoriteToggle: bookProvider.toggleFavorite,
+          favBooks: bookProvider.favBooks,
+        ),
+      ]);
+    }
+
     return Scaffold(
-      // Menampilkan halaman sesuai indeks yang dipilih
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -76,12 +71,12 @@ class _BottomNavbarState extends State<BottomNavbar> {
             label: 'Favorites',
           ),
         ],
+        currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex, // Indeks saat ini
         backgroundColor: Colors.black,
         selectedItemColor: Colors.deepPurple,
         unselectedItemColor: Colors.white,
-        onTap: _onItemTapped, // Mengatur fungsi saat item ditekan
+        onTap: _onItemTapped,
       ),
     );
   }

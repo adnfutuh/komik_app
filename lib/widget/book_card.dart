@@ -4,23 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:komik_app/const/const.dart';
 import 'package:komik_app/models/book_model.dart';
 import 'package:komik_app/models/enum.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/book_provider.dart';
 import '../util/util.dart';
 
 class BookCard extends StatelessWidget {
   final BookModel book;
   final Function(String) onFavoriteToggle;
-  final List<String> favBooks;
 
   const BookCard({
     super.key,
-    required this.favBooks,
     required this.book,
     required this.onFavoriteToggle,
   });
 
   @override
   Widget build(BuildContext context) {
+    final bookProvider = Provider.of<BookProvider>(context);
     Util util = Util(context);
 
     double height = 100;
@@ -32,7 +33,6 @@ class BookCard extends StatelessWidget {
       if (util.width > 350) {
         height += (util.width * 10 / 100);
       }
-
       height = clampDouble(height, 100, 250);
     }
     if (util.isTablet) {
@@ -44,11 +44,9 @@ class BookCard extends StatelessWidget {
       if (util.width > 650) {
         height += (util.width * 5 / 100);
       }
-
       if (util.width > 750) {
         height += (util.width * 5 / 100);
       }
-
       height = clampDouble(height, 130, 200);
     }
     if (util.isPc) {
@@ -62,6 +60,7 @@ class BookCard extends StatelessWidget {
       }
       height = clampDouble(height, 100, 250);
     }
+
     Color getBackgroundColor(Komik komik) {
       switch (komik) {
         case Komik.manhwa:
@@ -117,14 +116,14 @@ class BookCard extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(
                     Icons.favorite,
-                    color: favBooks.contains(book.bookId)
+                    color: bookProvider.favBooks.contains(book.bookId)
                         ? Colors.red
                         : Colors.black.withOpacity(0.7),
                   ),
-                  // Di dalam onPressed
                   onPressed: () {
                     onFavoriteToggle(book.bookId);
-                    final isFavorited = favBooks.contains(book.bookId);
+                    final isFavorited =
+                        bookProvider.favBooks.contains(book.bookId);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(

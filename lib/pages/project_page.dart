@@ -1,30 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:komik_app/const/const.dart';
 import 'package:komik_app/util/util.dart';
-import '../data_provider/dummy.dart';
+import 'package:provider/provider.dart';
+
 import '../models/book_model.dart';
+import '../providers/book_provider.dart';
 import '../widget/book_card.dart';
 
-class ProjectPage extends StatefulWidget {
-  final Function(String) onFavoriteToggle;
-
-  final List<String> favBooks;
-  const ProjectPage(
-      {super.key, required this.onFavoriteToggle, required this.favBooks});
-
-  @override
-  State<ProjectPage> createState() => _ProjectPageState();
-}
-
-class _ProjectPageState extends State<ProjectPage> {
-  List<String> favBooks = [];
+class ProjectPage extends StatelessWidget {
+  const ProjectPage({
+    super.key,
+    required void Function(String bookId) onFavoriteToggle,
+    required List<String> favBooks,
+  });
 
   @override
   Widget build(BuildContext context) {
-    List<BookModel> books = Dummy.books;
+    final bookProvider = Provider.of<BookProvider>(context);
+    List<BookModel> books = bookProvider.books;
     Util util = Util(context);
     return Scaffold(
-      backgroundColor: Colors.black,
       body: SafeArea(
         child: Column(
           children: [
@@ -91,9 +86,8 @@ class _ProjectPageState extends State<ProjectPage> {
                   itemCount: books.length > 17 ? 17 : books.length,
                   itemBuilder: (context, index) {
                     return BookCard(
-                      favBooks: widget.favBooks,
                       book: books[index],
-                      onFavoriteToggle: widget.onFavoriteToggle,
+                      onFavoriteToggle: bookProvider.toggleFavorite,
                     );
                   },
                 ),
