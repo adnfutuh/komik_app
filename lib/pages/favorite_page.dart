@@ -23,13 +23,6 @@ class FavoritePage extends StatelessWidget {
     List<BookModel> favoriteBooks = bookProvider.favoriteBooks;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Favorites',
-          style: defaultTxt.copyWith(color: Colors.white),
-        ),
-        backgroundColor: Colors.black,
-      ),
       body: favoriteBooks.isEmpty
           ? Center(
               child: Text(
@@ -41,30 +34,93 @@ class FavoritePage extends StatelessWidget {
                 ),
               ),
             )
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: util.isPhone
-                      ? 2
-                      : util.isTablet
-                          ? 3
-                          : 6,
-                  mainAxisSpacing: 5,
-                  crossAxisSpacing: 5,
-                  childAspectRatio: 0.5,
-                ),
-                itemCount: favoriteBooks.length,
-                itemBuilder: (context, index) {
-                  return BookCard(
-                    book: favoriteBooks[index],
-                    onFavoriteToggle: (bookId) {
-                      onFavoriteToggle(bookId);
-                    },
-                  );
-                },
+          : SafeArea(
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(left: 15, top: 15),
+                    height: util.isPhone ? 160 : 120,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Text(
+                            'Komik Adnan Size: ${MediaQuery.of(context).size.width}',
+                            style: defaultTxt.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Colors.black87,
+                              ),
+                              child: const Icon(
+                                Icons.favorite,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            Text(
+                              'Favorites',
+                              style: defaultTxt.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: SizedBox(
+                      width: util.width * 0.8,
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: _getCrossAxisCount(util),
+                          mainAxisSpacing: 5,
+                          crossAxisSpacing: 5,
+                          mainAxisExtent: 300,
+                        ),
+                        itemCount: favoriteBooks.length,
+                        itemBuilder: (context, index) {
+                          return BookCard(
+                            book: favoriteBooks[index],
+                            onFavoriteToggle: (bookId) {
+                              onFavoriteToggle(bookId);
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
     );
+  }
+
+  int _getCrossAxisCount(Util util) {
+    final width = util.width;
+
+    if (util.isTablet && width > 401 && width <= 706) {
+      return 3;
+    } else if (util.isTablet && width > 706) {
+      return 4;
+    } else if (util.isPc && width > 851 && width <= 1100) {
+      return 5;
+    } else if (util.isPc && width > 1101) {
+      return 6;
+    } else {
+      return 2;
+    }
   }
 }
