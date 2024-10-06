@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:komik_app/const/const.dart';
 import 'package:komik_app/models/book_model.dart';
-import 'package:komik_app/widget/book_card.dart';
+import 'package:komik_app/widget/book/book_card.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/book_provider.dart';
@@ -90,7 +90,9 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: 20)),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 20),
+            ),
 
             SliverToBoxAdapter(
               child: Center(
@@ -118,11 +120,7 @@ class HomePage extends StatelessWidget {
                 childCount: books.length,
               ),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: util.isPhone
-                    ? 2
-                    : util.isTablet
-                        ? 3
-                        : 6,
+                crossAxisCount: _getCrossAxisCount(util),
                 mainAxisSpacing: 5,
                 crossAxisSpacing: 5,
                 mainAxisExtent: 300,
@@ -135,5 +133,23 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  int _getCrossAxisCount(Util util) {
+    final width = util.width;
+
+    if (util.isTablet && width > 401 && width <= 510) {
+      return 3;
+    } else if (util.isTablet && width > 511 && width <= 706) {
+      return 4;
+    } else if (util.isTablet && width > 706) {
+      return 5;
+    } else if (util.isPc && width > 851 && width <= 1100) {
+      return 6;
+    } else if (util.isPc && width > 1101) {
+      return 7;
+    } else {
+      return 2;
+    }
   }
 }

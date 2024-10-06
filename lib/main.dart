@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:komik_app/providers/book_provider.dart';
-import 'package:komik_app/widget/bottom_navbar.dart';
+import 'package:komik_app/widget/navbar/bottom_navbar.dart';
 import 'package:provider/provider.dart';
 
 void main() {

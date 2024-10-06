@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../pages/favorite_page.dart';
-import '../pages/home_page.dart';
-import '../pages/mirror_page.dart';
-import '../pages/project_page.dart';
-import '../providers/book_provider.dart';
+import '../../pages/favorite_page.dart';
+import '../../pages/home_page.dart';
+import '../../pages/mirror_page.dart';
+import '../../pages/project_page.dart';
+import '../../providers/book_provider.dart';
 
 class BottomNavbar extends StatefulWidget {
   const BottomNavbar({super.key});

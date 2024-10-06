@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../models/book_model.dart';
 import '../providers/book_provider.dart';
-import '../widget/book_card.dart';
+import '../widget/book/book_card.dart';
 
 class ProjectPage extends StatelessWidget {
   const ProjectPage({
@@ -74,14 +74,10 @@ class ProjectPage extends StatelessWidget {
                 width: util.width * 0.8,
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: util.isPhone
-                        ? 2
-                        : util.isTablet
-                            ? 3
-                            : 6,
+                    crossAxisCount: _getCrossAxisCount(util),
                     mainAxisSpacing: 5,
                     crossAxisSpacing: 5,
-                    childAspectRatio: 0.5,
+                    mainAxisExtent: 300,
                   ),
                   itemCount: books.length > 17 ? 17 : books.length,
                   itemBuilder: (context, index) {
@@ -97,5 +93,21 @@ class ProjectPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  int _getCrossAxisCount(Util util) {
+    final width = util.width;
+
+    if (util.isTablet && width > 401 && width <= 706) {
+      return 3;
+    } else if (util.isTablet && width > 706) {
+      return 4;
+    } else if (util.isPc && width > 851 && width <= 1100) {
+      return 5;
+    } else if (util.isPc && width > 1101) {
+      return 6;
+    } else {
+      return 2;
+    }
   }
 }

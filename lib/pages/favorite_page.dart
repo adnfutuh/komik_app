@@ -4,7 +4,7 @@ import '../const/const.dart';
 import '../models/book_model.dart';
 import '../providers/book_provider.dart';
 import '../util/util.dart';
-import '../widget/book_card.dart';
+import '../widget/book/book_card.dart';
 
 class FavoritePage extends StatelessWidget {
   final List<String> favBooks;
