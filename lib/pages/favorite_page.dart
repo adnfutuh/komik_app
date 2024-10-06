@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../const/const.dart';
+import '../const/text/text.dart';
 import '../models/book_model.dart';
 import '../providers/book_provider.dart';
 import '../util/util.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:komik_app/const/const.dart';
+import 'package:komik_app/const/text/text.dart';
 import 'package:komik_app/models/book_model.dart';
 import 'package:komik_app/widget/book/book_card.dart';
 import 'package:provider/provider.dart';

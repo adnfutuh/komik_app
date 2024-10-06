@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:komik_app/const/const.dart';
+import 'package:komik_app/const/text/text.dart';
 import 'package:komik_app/util/util.dart';
 import 'package:provider/provider.dart';
 
