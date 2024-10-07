@@ -78,14 +78,14 @@ class _BookDetailPcState extends State<BookDetailPc> {
                       ),
                     ),
                     child: Hero(
-                      tag: bookId,
+                      tag: '${bookId}_image',
                       child: Image.asset(
                         widget.book.imageUrl,
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 40), // Tambahkan jarak antar elemen
+                  const SizedBox(width: 40),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [

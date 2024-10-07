@@ -7,7 +7,7 @@ import '../util/util.dart';
 import '../widget/book/book_card.dart';
 
 class FavoritePage extends StatelessWidget {
-  final List<String> favBooks;
+  final Set<String> favBooks;
   final Function(String) onFavoriteToggle;
 
   const FavoritePage({
@@ -39,7 +39,7 @@ class FavoritePage extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.only(left: 15, top: 15),
-                    height: util.isPhone ? 160 : 120,
+                    height: 120,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -82,13 +82,13 @@ class FavoritePage extends StatelessWidget {
                   ),
                   Expanded(
                     child: SizedBox(
-                      width: util.width * 0.8,
+                      width: util.isPhone ? util.width * 7 : util.width * 0.8,
                       child: GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: _getCrossAxisCount(util),
                           mainAxisSpacing: 5,
                           crossAxisSpacing: 5,
-                          mainAxisExtent: 300,
+                          mainAxisExtent: 320 + util.height / 300 * 10,
                         ),
                         itemCount: favoriteBooks.length,
                         itemBuilder: (context, index) {

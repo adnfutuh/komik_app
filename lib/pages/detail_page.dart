@@ -9,7 +9,7 @@ import '../util/util.dart';
 
 class DetailPage extends StatelessWidget {
   final BookModel book;
-  final List<String> favBooks;
+  final Set<String> favBooks;
   final Function(String) toggleFav;
 
   const DetailPage(

@@ -14,7 +14,6 @@ class SinopsisContent extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
-      height: util.height * 0.5,
       width: util.isPc ? util.width * 0.5 : util.width * 1,
       decoration: BoxDecoration(
         color: Colors.grey.withOpacity(0.5),

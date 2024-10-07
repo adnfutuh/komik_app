@@ -67,8 +67,8 @@ class _BookDetailTabletState extends State<BookDetailTablet> {
               ),
               const SizedBox(height: 30),
               Container(
-                margin: const EdgeInsets.only(left: 30),
-                height: util.height * 0.7,
+                height: util.height * 1.5,
+                width: util.height * 1,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(widget.book.imageUrl),
@@ -76,7 +76,7 @@ class _BookDetailTabletState extends State<BookDetailTablet> {
                   ),
                 ),
                 child: Hero(
-                  tag: bookId,
+                  tag: '${bookId}_image',
                   child: Image.asset(
                     widget.book.imageUrl,
                     fit: BoxFit.cover,

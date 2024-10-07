@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:komik_app/const/text/text.dart';
 
+import '../../util/util.dart';
+
 class MenuNavbar extends StatelessWidget {
   final Function(int) changeIndex;
   final int activeIndex;
@@ -13,13 +15,16 @@ class MenuNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Util util = Util(context);
     List<NavItem> navItems = [
       NavItem(name: 'Info'),
       NavItem(name: 'Sinopsis'),
     ];
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: util.isPhone
+          ? MainAxisAlignment.center
+          : MainAxisAlignment.spaceAround,
       children: List.generate(
         navItems.length,
         (index) {

@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
   const HomePage({
     super.key,
     required void Function(String bookId) onFavoriteToggle,
-    required List<String> favBooks,
+    required Set<String> favBooks,
   });
 
   @override
@@ -58,7 +58,11 @@ class HomePage extends StatelessWidget {
             SliverToBoxAdapter(
               child: Container(
                 padding: const EdgeInsets.only(left: 15),
-                height: util.isTablet ? 280 : 315,
+                height: util.isTablet
+                    ? 280 + util.height / 300 * 10
+                    : util.isPc
+                        ? 315
+                        : 320 + util.height / 300 * 10,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: books.length > 7 ? 7 : books.length,
@@ -123,7 +127,7 @@ class HomePage extends StatelessWidget {
                 crossAxisCount: _getCrossAxisCount(util),
                 mainAxisSpacing: 5,
                 crossAxisSpacing: 5,
-                mainAxisExtent: 300,
+                mainAxisExtent: 320 + util.height / 300 * 10,
               ),
             ),
             const SliverToBoxAdapter(

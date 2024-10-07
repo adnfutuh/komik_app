@@ -11,7 +11,7 @@ class MirrorPage extends StatelessWidget {
   const MirrorPage({
     super.key,
     required void Function(String bookId) onFavoriteToggle,
-    required List<String> favBooks,
+    required Set<String> favBooks,
   });
 
   @override
@@ -26,7 +26,7 @@ class MirrorPage extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.only(left: 15, top: 15),
-              height: util.isPhone ? 160 : 120,
+              height: 120,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -72,13 +72,13 @@ class MirrorPage extends StatelessWidget {
             ),
             Expanded(
               child: SizedBox(
-                width: util.width * 0.8,
+                width: util.isPhone ? util.width * 7 : util.width * 0.8,
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: _getCrossAxisCount(util),
                     mainAxisSpacing: 5,
                     crossAxisSpacing: 5,
-                    mainAxisExtent: 300,
+                    mainAxisExtent: 320 + util.height / 300 * 10,
                   ),
                   itemCount: 1,
                   itemBuilder: (context, index) {

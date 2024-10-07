@@ -56,9 +56,11 @@ class BookCard extends StatelessWidget {
           Stack(
             children: [
               Hero(
-                tag: book.bookId,
+                tag: '${book.bookId}_image',
                 child: Container(
-                  height: util.height * 0.4,
+                  height: util.isPhone
+                      ? 260 + util.width / 300 * 10
+                      : 220 + util.width / 300 * 10,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(book.imageUrl),
@@ -112,7 +114,7 @@ class BookCard extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              height: 70 + util.width / 300 * 10,
+              height: 60 + util.width / 300 * 10,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
@@ -129,7 +131,7 @@ class BookCard extends StatelessWidget {
                   ),
                 ],
               ),
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(5),
               alignment: Alignment.center,
               child: Text(
                 book.title,
