@@ -6,12 +6,15 @@ import 'package:provider/provider.dart';
 
 import '../providers/book_provider.dart';
 import '../util/util.dart';
+import '../widget/book/book_search_delegate.dart';
 
 class HomePage extends StatelessWidget {
+  final Set<String> favBooks;
+  final Function(String bookId) onFavoriteToggle;
   const HomePage({
     super.key,
-    required void Function(String bookId) onFavoriteToggle,
-    required Set<String> favBooks,
+    required this.favBooks,
+    required this.onFavoriteToggle,
   });
 
   @override
@@ -38,6 +41,21 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.search, color: Colors.white),
+                  onPressed: () {
+                    showSearch(
+                      context: context,
+                      delegate: BookSearchDelegate(
+                        favBooks: favBooks,
+                        toggleFav: onFavoriteToggle,
+                        books: books,
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
             SliverToBoxAdapter(
               child: Center(
