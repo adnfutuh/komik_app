@@ -85,7 +85,7 @@ class _BookDetailPcState extends State<BookDetailPc> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 40),
+                  const SizedBox(width: 60),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [

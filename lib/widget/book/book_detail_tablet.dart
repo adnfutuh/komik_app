@@ -67,8 +67,7 @@ class _BookDetailTabletState extends State<BookDetailTablet> {
               ),
               const SizedBox(height: 30),
               Container(
-                height: util.height * 1.5,
-                width: util.height * 1,
+                height: 400 + util.height / 300 * 10,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(widget.book.imageUrl),

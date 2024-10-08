@@ -42,18 +42,24 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               actions: [
-                IconButton(
-                  icon: const Icon(Icons.search, color: Colors.white),
-                  onPressed: () {
-                    showSearch(
-                      context: context,
-                      delegate: BookSearchDelegate(
-                        favBooks: favBooks,
-                        toggleFav: onFavoriteToggle,
-                        books: books,
-                      ),
-                    );
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(right: 10, top: 15),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      showSearch(
+                        context: context,
+                        delegate: BookSearchDelegate(
+                          favBooks: favBooks,
+                          toggleFav: onFavoriteToggle,
+                          books: books,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
