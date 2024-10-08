@@ -59,8 +59,8 @@ class BookCard extends StatelessWidget {
                 tag: '${book.bookId}_image',
                 child: Container(
                   height: util.isPhone
-                      ? 260 + util.width / 300 * 10
-                      : 220 + util.width / 300 * 10,
+                      ? 260 + util.height / 300 * 10
+                      : 220 + util.height / 300 * 10,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(book.imageUrl),
