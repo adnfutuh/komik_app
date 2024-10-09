@@ -38,102 +38,98 @@ class BookSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    final results = books.where((book) {
-      final lowerCaseQuery = query.toLowerCase();
+    final results = _searchBooks(query);
+
+    if (results.isEmpty) {
+      return _buildNoResultsContainer();
+    }
+
+    return _buildResultsList(results, context);
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggestions = _searchBooks(query);
+
+    if (suggestions.isEmpty) {
+      return Container(
+        color: Colors.white,
+        child: const Center(
+          child: Text(
+            'Tidak ada saran ditemukan.',
+          ),
+        ),
+      );
+    }
+
+    return _buildSuggestionsList(suggestions, context);
+  }
+
+  List<BookModel> _searchBooks(String query) {
+    final lowerCaseQuery = query.toLowerCase();
+    return books.where((book) {
       return book.title.toLowerCase().contains(lowerCaseQuery) ||
           book.alternative.toLowerCase().contains(lowerCaseQuery);
     }).toList();
+  }
 
-    if (results.isEmpty) {
-      return Container(
-          color: Colors.white,
-          child: const Center(child: Text('Tidak ada hasil ditemukan.')));
-    }
+  Widget _buildNoResultsContainer() {
+    return Container(
+      color: Colors.white,
+      child: const Center(child: Text('Tidak ada hasil ditemukan.')),
+    );
+  }
 
+  Widget _buildResultsList(List<BookModel> results, BuildContext context) {
     return Container(
       color: Colors.white,
       child: ListView.separated(
         itemCount: results.length,
-        separatorBuilder: (context, index) =>
-            const SizedBox(height: 8.0), // Jarak antar item
+        separatorBuilder: (context, index) => const SizedBox(height: 8.0),
         itemBuilder: (context, index) {
           final book = results[index];
-          return Container(
-            margin: const EdgeInsets.only(top: 20),
-            child: ListTile(
-              leading: Image.asset(
-                book.imageUrl, // Pastikan ini adalah asset lokal
-                width: 50, // Atur lebar gambar
-                fit: BoxFit.cover,
-              ),
-              title: highlightText(book.title, query),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DetailPage(
-                      book: book,
-                      favBooks: favBooks,
-                      toggleFav: toggleFav,
-                    ),
-                  ),
-                );
-              },
+          return ListTile(
+            leading: Image.asset(
+              book.imageUrl,
+              width: 50,
+              fit: BoxFit.cover,
             ),
+            title: highlightText(book.title, query),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailPage(
+                    book: book,
+                    favBooks: favBooks,
+                    toggleFav: toggleFav,
+                  ),
+                ),
+              );
+            },
           );
         },
       ),
     );
   }
 
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    if (query.isEmpty) {
-      return Container(
-        color: Colors.white,
-        child: const Center(
-          child: Text(
-            'Mulai mengetik untuk melihat saran.',
-          ),
-        ),
-      );
-    }
-
-    List<BookModel> suggestions;
-    if (books.any(
-        (book) => book.title.toLowerCase().contains(query.toLowerCase()))) {
-      // Jika judul cocok, saran hanya dari judul
-      suggestions = books
-          .where(
-              (book) => book.title.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-    } else {
-      // Jika alternatif cocok, saran dari judul
-      suggestions = books
-          .where((book) =>
-              book.alternative.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-    }
-
-    if (suggestions.isEmpty) {
-      return const Center(child: Text('Tidak ada saran ditemukan.'));
-    }
-
+  Widget _buildSuggestionsList(
+      List<BookModel> suggestions, BuildContext context) {
     return Container(
       color: Colors.white,
       child: ListView.separated(
         itemCount: suggestions.length,
-        separatorBuilder: (context, index) =>
-            const SizedBox(height: 8.0), // Jarak antar item
+        separatorBuilder: (context, index) => const SizedBox(height: 8.0),
         itemBuilder: (context, index) {
           final book = suggestions[index];
           return ListTile(
-            title: highlightText(
-              book.title,
-              query,
+            leading: Image.asset(
+              book.imageUrl,
+              width: 50,
+              fit: BoxFit.cover,
             ),
+            title: highlightText(book.title, query),
             onTap: () {
-              query = book.title; // Mengisi query dengan saran yang dipilih
               Navigator.push(
                 context,
                 MaterialPageRoute(
