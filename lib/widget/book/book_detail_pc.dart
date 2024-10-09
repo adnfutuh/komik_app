@@ -44,7 +44,7 @@ class _BookDetailPcState extends State<BookDetailPc> {
           },
         ),
         title: Text(
-          "Detail Buku ${MediaQuery.of(context).size.width}",
+          "Detail Buku ",
           style: defaultTxt.copyWith(color: Colors.white),
         ),
         backgroundColor: Colors.black,

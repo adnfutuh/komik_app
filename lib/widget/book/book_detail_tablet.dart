@@ -43,7 +43,7 @@ class _BookDetailTabletState extends State<BookDetailTablet> {
           },
         ),
         title: Text(
-          "Detail Buku ${MediaQuery.of(context).size.width}",
+          "Detail Buku ",
           style: defaultTxt.copyWith(color: Colors.white),
         ),
         backgroundColor: Colors.black,

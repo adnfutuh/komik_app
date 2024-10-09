@@ -147,7 +147,7 @@ class HomePage extends StatelessWidget {
         crossAxisCount: _getCrossAxisCount(util),
         mainAxisSpacing: 5,
         crossAxisSpacing: 5,
-        mainAxisExtent: 320 + util.height / 300 * 10,
+        mainAxisExtent: 330 + util.height / 300 * 10,
       ),
     );
   }

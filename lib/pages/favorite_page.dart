@@ -45,7 +45,7 @@ class FavoritePage extends StatelessWidget {
                       children: [
                         Center(
                           child: Text(
-                            'Komik Adnan Size: ${MediaQuery.of(context).size.width}',
+                            'Shinigami Adn',
                             style: defaultTxt.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -88,7 +88,7 @@ class FavoritePage extends StatelessWidget {
                           crossAxisCount: _getCrossAxisCount(util),
                           mainAxisSpacing: 5,
                           crossAxisSpacing: 5,
-                          mainAxisExtent: 320 + util.height / 300 * 10,
+                          mainAxisExtent: 330 + util.height / 300 * 10,
                         ),
                         itemCount: favoriteBooks.length,
                         itemBuilder: (context, index) {
