@@ -12,21 +12,28 @@ class DetailPage extends StatelessWidget {
   final Set<String> favBooks;
   final Function(String) toggleFav;
 
-  const DetailPage(
-      {super.key,
-      required this.favBooks,
-      required this.toggleFav,
-      required this.book});
+  const DetailPage({
+    super.key,
+    required this.favBooks,
+    required this.toggleFav,
+    required this.book,
+  });
 
   @override
   Widget build(BuildContext context) {
     Util util = Util(context);
     return Scaffold(
       body: util.isPc
-          ? BookDetailPc(book: book)
+          ? BookDetailPc(
+              book: book,
+            )
           : util.isTablet
-              ? BookDetailTablet(book: book)
-              : BookDetailPhone(book: book),
+              ? BookDetailTablet(
+                  book: book,
+                )
+              : BookDetailPhone(
+                  book: book,
+                ),
     );
   }
 }

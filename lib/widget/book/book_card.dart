@@ -36,7 +36,6 @@ class BookCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final bookProvider = Provider.of<BookProvider>(context);
     Util util = Util(context);
-
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
@@ -55,30 +54,27 @@ class BookCard extends StatelessWidget {
         child: Column(children: [
           Stack(
             children: [
-              Hero(
-                tag: '${book.bookId}_image',
-                child: Container(
-                  height: util.isPhone
-                      ? 260 + util.height / 300 * 10
-                      : 220 + util.height / 300 * 10,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(book.imageUrl),
-                      fit: BoxFit.cover,
-                    ),
+              Container(
+                height: util.isPhone
+                    ? 260 + util.height / 300 * 10
+                    : 220 + util.height / 300 * 10,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(book.imageUrl),
+                    fit: BoxFit.cover,
                   ),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 5, right: 4),
-                      padding: const EdgeInsets.all(3),
-                      decoration: BoxDecoration(
-                        color: getBackgroundColor(book.komik),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        book.komik.title.toUpperCase(),
-                      ),
+                ),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 5, right: 4),
+                    padding: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      color: getBackgroundColor(book.komik),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      book.komik.title.toUpperCase(),
                     ),
                   ),
                 ),

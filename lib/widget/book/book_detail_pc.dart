@@ -10,7 +10,10 @@ import '../navbar/sinopsis_content.dart';
 class BookDetailPc extends StatefulWidget {
   final BookModel book;
 
-  const BookDetailPc({super.key, required this.book});
+  const BookDetailPc({
+    super.key,
+    required this.book,
+  });
 
   @override
   State<BookDetailPc> createState() => _BookDetailPcState();
@@ -27,7 +30,6 @@ class _BookDetailPcState extends State<BookDetailPc> {
 
   @override
   Widget build(BuildContext context) {
-    final bookId = widget.book.bookId;
     Util util = Util(context);
 
     return Scaffold(
@@ -77,12 +79,9 @@ class _BookDetailPcState extends State<BookDetailPc> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    child: Hero(
-                      tag: '${bookId}_image',
-                      child: Image.asset(
-                        widget.book.imageUrl,
-                        fit: BoxFit.cover,
-                      ),
+                    child: Image.asset(
+                      widget.book.imageUrl,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   const SizedBox(width: 60),

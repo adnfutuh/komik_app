@@ -29,18 +29,15 @@ class ProjectPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Komik Adnan Size: ${MediaQuery.of(context).size.width}',
-                        style: defaultTxt.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
+                  Center(
+                    child: Text(
+                      'Komik Adnan Size: ${MediaQuery.of(context).size.width}',
+                      style: defaultTxt.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
                       ),
-                    ],
+                    ),
                   ),
                   const SizedBox(height: 20),
                   Row(
